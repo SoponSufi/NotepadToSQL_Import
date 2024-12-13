@@ -1,0 +1,29 @@
+CREATE TABLE tbl_Department (
+    DepartmentName NVARCHAR(50) PRIMARY KEY
+);
+
+CREATE TABLE tbl_Employee (
+    EmployeeName NVARCHAR(50),
+    DepartmentName NVARCHAR(50),
+    Salary FLOAT,
+    FOREIGN KEY (DepartmentName) REFERENCES tbl_Department(DepartmentName)
+);
+
+
+INSERT INTO tbl_Department (DepartmentName) 
+VALUES 
+    ('.NET'), 
+    ('JAVA'), 
+     
+    ('PHP');
+
+	INSERT INTO tbl_Employee (EmployeeName, DepartmentName, Salary) 
+VALUES 
+    ('John', '.NET', 1000),
+    ('Tom', '.NET', 2000),
+    ('Sean', 'JAVA', 3000),
+    ('Smith', 'JAVA', 2500),
+    ('Andrew', 'JAVA', 1200),
+	('Bob', 'PHP', 4000),
+	('Steve', 'PHP', 5000) 
+	;

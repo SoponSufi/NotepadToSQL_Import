@@ -1,0 +1,41 @@
+USE [TstDBNew]
+GO
+/****** Object:  Table [dbo].[tbl_Contact]    Script Date: 15/10/2024 23:14:28 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[tbl_Contact](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [nvarchar](100) NULL,
+	[Email] [nvarchar](255) NULL,
+	[Phone] [nvarchar](15) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
+UNIQUE NONCLUSTERED 
+(
+	[Email] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  StoredProcedure [dbo].[usp_InsertContact]    Script Date: 15/10/2024 23:14:28 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[usp_InsertContact]
+    @Name NVARCHAR(100),
+    @Email NVARCHAR(255),
+    @Phone NVARCHAR(15)
+AS
+BEGIN
+    -- Check if the email already exists
+    IF NOT EXISTS (SELECT 1 FROM tbl_Contact WHERE Email = @Email)
+    BEGIN
+        -- Insert the new contact
+        INSERT INTO tbl_Contact (Name, Email, Phone) VALUES (@Name, @Email, @Phone)
+    END
+END
+GO
